@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 from InputGenerator import inputGenerator
+from HashTable import HashTable
 import random
 
 class Worker():
@@ -48,15 +49,46 @@ class Worker():
 
 #now run this
 w = Worker()
-search_item_count = 20
-invalid_item_count = 20
-string_count = 5000
+search_item_count = 900
+invalid_item_count = 900
+string_count = 1000
 w.build(string_count,search_item_count,invalid_item_count)
 
 
+
+#------HASH TABLE------#
+
 #some timeit shit here
 #now we insert
-#for i in 
+print("Adding items to hash table....")
+h = HashTable(13)
+for i in w.random_strings:
+    h.add(i)
 
+print("Printing hash table....")
+h.pprint()
+
+t = 0
+f = 0
+for i in w.test_strings:
+    result = h.search(i)
+    if(result):
+        t+=1
+    else:
+        f+=1
+
+print("Test strings:")
+print("true: %s false: %s" %(t,f))
+
+t=0
+f=0
+for i in w.error_strings:
+    result = h.search(i)
+    if(result):
+        t+=1
+    else:
+        f+=1
+print("invalid test strings:")
+print("true: %s false: %s" %(t,f))
 
 
