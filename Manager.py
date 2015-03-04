@@ -55,9 +55,9 @@ def restoreInput(filename):
 
 #now run this
 w = Worker()
-search_item_count = 900
-invalid_item_count = 900
-string_count = 10000
+search_item_count = 90000
+invalid_item_count = 90000
+string_count = 100000000
 w.build(string_count,search_item_count,invalid_item_count)
 
 #Save input to pickle file
