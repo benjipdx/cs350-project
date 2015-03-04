@@ -20,7 +20,7 @@ class Worker():
         #for i in range(count):
         #    random_list.append(random.randint(1,stringcount))
 
-        self.test_strings =  random.sample(self.random_strings, count)
+        self.test_strings =  random.sample(self.random_strings, count) #how random is this?
         return
 
     def genErrorString(self):
@@ -46,14 +46,34 @@ class Worker():
         self.genErrorStringList(invalid_test_count)
         return
 
+def restoreInput(filename):
+    import pickle
+    f = open(filename, "rb")
+    tmp = pickle.load(f)
+    f.close()
+    return tmp
 
 #now run this
 w = Worker()
 search_item_count = 900
 invalid_item_count = 900
-string_count = 1000
+string_count = 10000
 w.build(string_count,search_item_count,invalid_item_count)
 
+#Save input to pickle file
+import time,pickle
+datadir = "data"
+filetime = str(int(time.time()))
+inputfilename = datadir+"/"+filetime+"/"+"input-"+filetime
+import os
+if not os.path.exists(os.path.dirname(inputfilename)):
+    os.makedirs(os.path.dirname(inputfilename))
+
+inputfile = open(inputfilename,"w+")
+pickle.dump(w,inputfile)
+inputfile.close()
+
+#restore = restoreInput(inputfilename)
 
 
 #------HASH TABLE------#
@@ -62,6 +82,7 @@ w.build(string_count,search_item_count,invalid_item_count)
 #now we insert
 print("Adding items to hash table....")
 h = HashTable(13)
+import sys
 for i in w.random_strings:
     h.add(i)
 
