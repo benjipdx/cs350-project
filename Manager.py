@@ -97,8 +97,8 @@ def test(searchcount,invalidcount,stringcount):
         datafile.write("Trial,N,BasicOps,Time\n")
         
         for trial in range(trial_count):
-          datafile.write(str(trial)+",")
-
+          datafile.write(str(trial+1)+",")
+          h = HashTable(57)
           basicop = 0
           begintime = time.time()
           for i in w.random_strings:
@@ -111,15 +111,182 @@ def test(searchcount,invalidcount,stringcount):
           print("insert time: %s" % diff)
           print("basic op count: %s" % basicop)
 
-        datafile.close()
+        #search trials
+        datafile.write("\n\nHashTable-"+filetime+"-SearchSuccessful\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+ 
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.test_strings:
+            ret=h.search(i)
+            basicop+=ret[0]
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("search time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        datafile.write("\n\nHashTable-"+filetime+"-SearchInvalidStrings\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+ 
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.error_strings:
+            ret=h.search(i)
+            basicop+=ret[0]
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("invalid search time: %s" % diff)
+          print("basic op count: %s" % basicop)
 
         #-----BST--------------#
 
+        datafilename = datadir+"/"+filetime+"/"+"BST-"+filetime+".csv"        
+        import os
+        if not os.path.exists(os.path.dirname(datafilename)):
+          os.makedirs(os.path.dirname(datafilename))
+        datafile = open(datafilename,"wb+")
+        #prep data file
+        datafile.write("BST-"+filetime+"-Insert\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+        
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+          #h = HashTable(57) initialize
+          basicop = 0
+          begintime = time.time()
+          for i in w.random_strings:
+            basicop+=h.add(i)
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("insert time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        #search trials
+        datafile.write("\n\nBST-"+filetime+"-SearchSuccessful\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+ 
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.test_strings:
+            ret=h.search(i)
+            basicop+=ret[0]
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("search time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        datafile.write("\n\nBST-"+filetime+"-SearchInvalidStrings\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+ 
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.error_strings:
+            ret=h.search(i)
+            basicop+=ret[0]
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("invalid search time: %s" % diff)
+          print("basic op count: %s" % basicop)
 
 
         #-----234treeeeeeeeeee--------------#
 
+        datafilename = datadir+"/"+filetime+"/"+"234-"+filetime+".csv"        
+        import os
+        if not os.path.exists(os.path.dirname(datafilename)):
+          os.makedirs(os.path.dirname(datafilename))
+        datafile = open(datafilename,"wb+")
+        #prep data file
+        datafile.write("234-"+filetime+"-Insert\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+        
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+          #h = HashTable(57) initialize
+          basicop = 0
+          begintime = time.time()
+          for i in w.random_strings:
+            basicop+=h.add(i)
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("insert time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        #search trials
+        datafile.write("\n\n234-"+filetime+"-SearchSuccessful\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+ 
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.test_strings:
+            ret=h.search(i)
+            basicop+=ret[0]
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("search time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        datafile.write("\n\n234-"+filetime+"-SearchInvalidStrings\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+ 
+        for trial in range(trial_count):
+          datafile.write(str(trial+1)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.error_strings:
+            ret=h.search(i)
+            basicop+=ret[0]
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("invalid search time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        datafile.close()
+
+
 
 test(1000,1000,10000)
+test(10000,10000,100000)
+test(100000,100000,1000000)
 
 
