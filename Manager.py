@@ -53,63 +53,73 @@ def restoreInput(filename):
     f.close()
     return tmp
 
-#now run this
-w = Worker()
-search_item_count = 90000
-invalid_item_count = 90000
-string_count = 100000000
-w.build(string_count,search_item_count,invalid_item_count)
+#-----TEST 1-----#
+def test(searchcount,invalidcount,stringcount):
 
-#Save input to pickle file
-import time,pickle
-datadir = "data"
-filetime = str(int(time.time()))
-inputfilename = datadir+"/"+filetime+"/"+"input-"+filetime
-import os
-if not os.path.exists(os.path.dirname(inputfilename)):
-    os.makedirs(os.path.dirname(inputfilename))
+        #now run this
+        w = Worker()
+        search_item_count = searchcount
+        invalid_item_count = invalidcount
+        string_count = stringcount
+        w.build(string_count,search_item_count,invalid_item_count)
 
-inputfile = open(inputfilename,"w+")
-pickle.dump(w,inputfile)
-inputfile.close()
+        #Save input to pickle file
+        import time,pickle
+        datadir = "data"
+        filetime = str(int(time.time()))
+        inputfilename = datadir+"/"+filetime+"/"+"input-"+filetime
+        import os
+        if not os.path.exists(os.path.dirname(inputfilename)):
+            os.makedirs(os.path.dirname(inputfilename))
 
-#restore = restoreInput(inputfilename)
+        inputfile = open(inputfilename,"w+")
+        pickle.dump(w,inputfile)
+        inputfile.close()
+
+        #restore = restoreInput(inputfilename)
+
+        trial_count = 10
+
+        #------HASH TABLE------#
+        #now we insert
+        print("Adding items to hash table....")
+        h = HashTable(57)
+        import sys
+        import time
+
+        datafilename = datadir+"/"+filetime+"/"+"HT-"+filetime+".csv"        
+        import os
+        if not os.path.exists(os.path.dirname(datafilename)):
+          os.makedirs(os.path.dirname(datafilename))
+        datafile = open(datafilename,"wb+")
+        #prep data file
+        datafile.write("HashTable-"+filetime+"-Insert\n")
+        datafile.write("Trial,N,BasicOps,Time\n")
+        
+        for trial in range(trial_count):
+          datafile.write(str(trial)+",")
+
+          basicop = 0
+          begintime = time.time()
+          for i in w.random_strings:
+            basicop+=h.add(i)
+          endtime = time.time()
+          diff = endtime - begintime
+          datafile.write(str(stringcount)+",")
+          datafile.write(str(basicop)+",")
+          datafile.write(str(diff)+"\n")
+          print("insert time: %s" % diff)
+          print("basic op count: %s" % basicop)
+
+        datafile.close()
+
+        #-----BST--------------#
 
 
-#------HASH TABLE------#
 
-#some timeit shit here
-#now we insert
-print("Adding items to hash table....")
-h = HashTable(13)
-import sys
-for i in w.random_strings:
-    h.add(i)
+        #-----234treeeeeeeeeee--------------#
 
-print("Printing hash table....")
-h.pprint()
 
-t = 0
-f = 0
-for i in w.test_strings:
-    result = h.search(i)
-    if(result):
-        t+=1
-    else:
-        f+=1
-
-print("Test strings:")
-print("true: %s false: %s" %(t,f))
-
-t=0
-f=0
-for i in w.error_strings:
-    result = h.search(i)
-    if(result):
-        t+=1
-    else:
-        f+=1
-print("invalid test strings:")
-print("true: %s false: %s" %(t,f))
+test(1000,1000,10000)
 
 

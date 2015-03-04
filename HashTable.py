@@ -8,10 +8,10 @@ class HashTable():
             self.table.append([])
 
     def modhash(self,string):
-        """string input is len(9)"""
+        """string input is len(9), this is the basic op"""
         sum = 0
-        for i in string:
-            sum+=ord(i)
+        for i in string: #this is basic op
+            sum+=ord(i)  #we do this 9 times since len(string) == 9
         return (sum % self.length)
 
 
@@ -20,14 +20,20 @@ class HashTable():
     def add(self,string):
         tmphash = self.modhash(string)
         self.table[tmphash].append(string)
+        return 9
 
     def search(self,string):
+        retlist = []
         tmphash = self.modhash(string)
         for element in self.table[tmphash]:
             if (string == element):
-                return True
+              retlist.append(9)
+              retlist.append(True)
+              return retlist
         #Didn't find it
-        return False
+        retlist.append(9)
+        retlist.append(False)
+        return retlist
 
     def pprint(self):
         for row in self.table:
