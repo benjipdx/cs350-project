@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 from InputGenerator import inputGenerator
 from HashTable import HashTable
+from BST import bst
 import random
 
 class Worker():
@@ -93,6 +94,7 @@ def test(searchcount,invalidcount,stringcount):
           os.makedirs(os.path.dirname(datafilename))
         datafile = open(datafilename,"wb+")
         #prep data file
+        datafile.write("\n\nTest "+"SearchCount: "+str(searchcount)+" Invalid Count: "+str(invalidcount)+" StringCount: "+str(stringcount)+"\n")
         datafile.write("HashTable-"+filetime+"-Insert\n")
         datafile.write("Trial,N,BasicOps,Time\n")
         
@@ -158,16 +160,17 @@ def test(searchcount,invalidcount,stringcount):
           os.makedirs(os.path.dirname(datafilename))
         datafile = open(datafilename,"wb+")
         #prep data file
+        datafile.write("\n\nTest "+"SearchCount: "+str(searchcount)+" Invalid Count: "+str(invalidcount)+" StringCount: "+str(stringcount)+"\n")
         datafile.write("BST-"+filetime+"-Insert\n")
         datafile.write("Trial,N,BasicOps,Time\n")
         
         for trial in range(trial_count):
           datafile.write(str(trial+1)+",")
-          #h = HashTable(57) initialize
+          b = bst()
           basicop = 0
           begintime = time.time()
           for i in w.random_strings:
-            basicop+=h.add(i)
+            basicop+=b.insert(i)
           endtime = time.time()
           diff = endtime - begintime
           datafile.write(str(stringcount)+",")
@@ -186,7 +189,7 @@ def test(searchcount,invalidcount,stringcount):
           basicop = 0
           begintime = time.time()
           for i in w.test_strings:
-            ret=h.search(i)
+            ret=b.search(i)
             basicop+=ret[0]
           endtime = time.time()
           diff = endtime - begintime
@@ -205,7 +208,7 @@ def test(searchcount,invalidcount,stringcount):
           basicop = 0
           begintime = time.time()
           for i in w.error_strings:
-            ret=h.search(i)
+            ret=b.search(i)
             basicop+=ret[0]
           endtime = time.time()
           diff = endtime - begintime
@@ -224,12 +227,13 @@ def test(searchcount,invalidcount,stringcount):
           os.makedirs(os.path.dirname(datafilename))
         datafile = open(datafilename,"wb+")
         #prep data file
+        datafile.write("\n\nTest "+"SearchCount: "+str(searchcount)+" Invalid Count: "+str(invalidcount)+" StringCount: "+str(stringcount)+"\n")
         datafile.write("234-"+filetime+"-Insert\n")
         datafile.write("Trial,N,BasicOps,Time\n")
         
         for trial in range(trial_count):
           datafile.write(str(trial+1)+",")
-          #h = HashTable(57) initialize
+          h = HashTable(57)
           basicop = 0
           begintime = time.time()
           for i in w.random_strings:
@@ -287,6 +291,6 @@ def test(searchcount,invalidcount,stringcount):
 
 test(1000,1000,10000)
 test(10000,10000,100000)
-test(100000,100000,1000000)
+#test(100000,100000,1000000)
 
 
