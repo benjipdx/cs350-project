@@ -14,9 +14,6 @@ class HashTable():
             sum+=ord(i)  #we do this 9 times since len(string) == 9
         return (sum % self.length)
 
-
-    #TODO add basic operation
-
     def add(self,string):
         tmphash = self.modhash(string)
         self.table[tmphash].append(string)

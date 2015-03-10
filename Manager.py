@@ -2,6 +2,7 @@
 from InputGenerator import inputGenerator
 from HashTable import HashTable
 from BST import bst
+import twothreefour
 import random
 
 class Worker():
@@ -233,11 +234,12 @@ def test(searchcount,invalidcount,stringcount):
         
         for trial in range(trial_count):
           datafile.write(str(trial+1)+",")
-          h = HashTable(57)
+          root = twothreefour.tNode(None)
+          tree = twothreefour.Tree(root)
           basicop = 0
           begintime = time.time()
           for i in w.random_strings:
-            basicop+=h.add(i)
+            basicop+=tree.insert(i,root)
           endtime = time.time()
           diff = endtime - begintime
           datafile.write(str(stringcount)+",")
@@ -249,6 +251,14 @@ def test(searchcount,invalidcount,stringcount):
         #search trials
         datafile.write("\n\n234-"+filetime+"-SearchSuccessful\n")
         datafile.write("Trial,N,BasicOps,Time\n")
+
+        #>>> root = twothreefour.tNode(None)
+        #>>> root
+        #<twothreefour.tNode instance at 0x10e3547a0>
+        #>>> tree = twothreefour.Tree(root)
+        #>>> tree
+        #<twothreefour.Tree instance at 0x10e354758>
+        #>>> tree.insert("DERPEPRP",root)
  
         for trial in range(trial_count):
           datafile.write(str(trial+1)+",")
@@ -256,8 +266,7 @@ def test(searchcount,invalidcount,stringcount):
           basicop = 0
           begintime = time.time()
           for i in w.test_strings:
-            ret=h.search(i)
-            basicop+=ret[0]
+            basicop+=tree.search(root,i)[0]
           endtime = time.time()
           diff = endtime - begintime
           datafile.write(str(stringcount)+",")
@@ -275,8 +284,7 @@ def test(searchcount,invalidcount,stringcount):
           basicop = 0
           begintime = time.time()
           for i in w.error_strings:
-            ret=h.search(i)
-            basicop+=ret[0]
+            basicop+=tree.search(root,i)[0]
           endtime = time.time()
           diff = endtime - begintime
           datafile.write(str(stringcount)+",")
@@ -290,7 +298,7 @@ def test(searchcount,invalidcount,stringcount):
 
 
 test(1000,1000,10000)
-test(10000,10000,100000)
+#test(10000,10000,100000)
 #test(100000,100000,1000000)
 
 
