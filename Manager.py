@@ -298,7 +298,7 @@ def test(searchcount,invalidcount,stringcount):
 
 
 test(1000,1000,10000)
-#test(10000,10000,100000)
+test(10000,10000,100000)
 #test(100000,100000,1000000)
 
 
