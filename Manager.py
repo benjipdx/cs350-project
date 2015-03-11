@@ -68,7 +68,7 @@ def test(searchcount,invalidcount,stringcount):
         #Save input to pickle file
         import time,pickle
         datadir = "data"
-        filetime = str(int(time.time()))
+        filetime = str(stringcount)
         inputfilename = datadir+"/"+filetime+"/"+"input-"+filetime
         import os
         if not os.path.exists(os.path.dirname(inputfilename)):
@@ -297,8 +297,9 @@ def test(searchcount,invalidcount,stringcount):
 
 
 
+test(1,1,10)
+test(10,10,100)
+test(100,100,1000)
 test(1000,1000,10000)
 test(10000,10000,100000)
 test(100000,100000,1000000)
-test(100000,100000,10000000)
-test(100000,100000,100000000)
